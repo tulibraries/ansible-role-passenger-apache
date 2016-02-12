@@ -1,0 +1,12 @@
+---
+# tasks file for ansible_passenger-apache-role
+#
+
+- name: OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - passenger
+
+# RedHat(setup) specific tasks
+- include: setup-RedHat.yml
+  when: "ansible_os_family == 'RedHat'"

@@ -1,0 +1,5 @@
+---
+# defaults file for ansible_passenger-apache-role
+
+passenger_yum_repos_path: /etc/yum.repos.d/passenger.repo
+passengeryum_repo_download_url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo

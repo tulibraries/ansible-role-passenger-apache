@@ -1,0 +1,31 @@
+---
+
+- name: Make sure passenger prerequisites are installed
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - epel-release
+    - pygpgme
+    - curl
+  become: yes
+  tags:
+    - passenger
+
+- name: Download the phusion-passenger yum repository
+  shell: >
+    curl --fail -sSLo {{passenger_yum_repos_path}} {{passengeryum_repo_download_url}}
+  args:
+    creates: {{passenger_yum_repos_path}}
+  become: yes
+  tags:
+    - passenger
+
+- name: Install the passenger repository
+  yum:
+    name: mod_passenger
+    state: installed
+  become: yes
+  notify: restart apache
+  tags:
+    - passenger

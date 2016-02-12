@@ -1,8 +1,8 @@
 ---
 # handlers file for ansible_passenger-apache-role
 
--name: restart apache
- service:
-   name: {{ apache }}
-   status: restarted
- become: yes
+- name: restart apache
+  service:
+    name: "{{ apache }}"
+    state: restarted
+  become: yes

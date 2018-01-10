@@ -47,6 +47,10 @@
   when: import_key.changed
   become: yes
 
+- name: enable yum continuous release repository
+  command: yum-config-manager --enable cr
+  become: yes
+
 - name: Install the passenger repository
   yum:
     name: mod_passenger

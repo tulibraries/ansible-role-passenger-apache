@@ -51,7 +51,7 @@
   yum:
     name: mod_passenger
     state: installed
-    #update_cache: yes
+    update_cache: yes
   become: yes
   notify: restart apache
   tags:

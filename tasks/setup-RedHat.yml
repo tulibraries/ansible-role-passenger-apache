@@ -26,7 +26,7 @@
     name: passenger
     description: Repository with Prometheus RPM packages for CentOS 7
     baseurl: https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch
-    gpgkey: "{{ passenger_yum_repo_gpg_urls | first }}"
+    gpgkey: "{{ passenger_yum_repo_gpg_urls[1] }}"
     gpgcheck: yes
     repo_gpgcheck: yes
     sslverify: yes
@@ -34,13 +34,13 @@
 
 
 
-- name: Download the phusion-passenger yum repository
-  get_url:
-    url: "{{passenger_yum_repo_download_url}}"
-    dest: "{{passenger_yum_repos_path}}"
-  become: yes
-  tags:
-    - passenger
+# - name: Download the phusion-passenger yum repository
+#   get_url:
+#     url: "{{passenger_yum_repo_download_url}}"
+#     dest: "{{passenger_yum_repos_path}}"
+#   become: yes
+#   tags:
+#     - passenger
 
 - name: Make cache
   command: "yum -q makecache -y --disablerepo='*' --enablerepo='passenger'"

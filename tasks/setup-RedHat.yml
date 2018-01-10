@@ -21,6 +21,19 @@
   tags:
     - passenger
 
+- name: add passenger repository
+  yum_repository:
+    name: passenger
+    description: Repository with Prometheus RPM packages for CentOS 7
+    baseurl: https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch
+    gpgkey: "{{ passenger_yum_repo_gpg_urls | first }}"
+    gpgcheck: yes
+    repo_gpgcheck: yes
+    sslverify: yes
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+
+
 - name: Download the phusion-passenger yum repository
   get_url:
     url: "{{passenger_yum_repo_download_url}}"

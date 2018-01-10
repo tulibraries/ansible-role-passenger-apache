@@ -38,4 +38,4 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/passenger-config validate-install'
 
   # Clean up
-- sudo docker stop "$(cat ${container_id})"
+  - sudo docker stop "$(cat ${container_id})"

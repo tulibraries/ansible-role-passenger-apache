@@ -27,8 +27,8 @@
     description: Repository with Prometheus RPM packages for CentOS 7
     baseurl: https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch
     gpgkey: "{{ passenger_yum_repo_gpg_urls[1] }}"
-    gpgcheck: no
-    repo_gpgcheck: yes
+    gpgcheck: "{{ passenger_gpg_check }}"
+    repo_gpgcheck: "{{ passenger_repo_gpgcheck }}"
     sslverify: yes
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 

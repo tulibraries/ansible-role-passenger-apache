@@ -8,3 +8,4 @@ passenger_yum_repo_download_url: https://oss-binaries.phusionpassenger.com/yum/d
 passenger_yum_repo_gpg_urls:
   - https://oss-binaries.phusionpassenger.com/yum/definitions/RPM-GPG-KEY.asc
   - https://packagecloud.io/gpg.key
+passenger_make_cache: false

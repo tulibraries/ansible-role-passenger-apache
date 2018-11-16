@@ -24,7 +24,7 @@
 - name: add passenger repository
   yum_repository:
     name: passenger
-    description: Repository with Prometheus RPM packages for CentOS 7
+    description: Repository with Passenger RPM packages for CentOS 7
     baseurl: https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch
     gpgkey: "{{ passenger_yum_repo_gpg_urls[1] }}"
     gpgcheck: "{{ passenger_gpg_check }}"
@@ -34,12 +34,8 @@
 
 - name: Make cache
   command: "yum -q makecache -y --disablerepo='*' --enablerepo='passenger'"
-  when: import_key.changed
+  when: passenger_make_cache and import_key.changed
   become: yes
-
-# - name: enable yum continuous release repository
-#   command: yum-config-manager --enable cr
-#   become: yes
 
 - name: Install the passenger repository
   yum:

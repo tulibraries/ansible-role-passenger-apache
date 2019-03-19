@@ -1,11 +1,11 @@
 ---
 # defaults file for ansible_passenger-apache-role
 
-passenger_gpg_check: no
-passenger_repo_gpgcheck: yes
+passenger_package_name: mod_passenger
+passenger_gpg_check: false
+passenger_repo_gpgcheck: true
 passenger_yum_repos_path: /etc/yum.repos.d/passenger.repo
 passenger_yum_repo_download_url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
 passenger_yum_repo_gpg_urls:
   - https://oss-binaries.phusionpassenger.com/yum/definitions/RPM-GPG-KEY.asc
-  - https://packagecloud.io/gpg.key
-passenger_make_cache: false
+  - https://packagecloud.io/phusion/passenger/gpgkey

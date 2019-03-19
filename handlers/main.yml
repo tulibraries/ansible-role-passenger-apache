@@ -5,4 +5,4 @@
   service:
     name: "{{ apache }}"
     state: restarted
-  become: yes
+  become: true

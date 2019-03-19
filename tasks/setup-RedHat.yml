@@ -7,7 +7,7 @@
   with_items:
     - epel-release
     - pygpgme
-  become: yes
+  become: true
   tags:
     - passenger
 
@@ -17,7 +17,7 @@
     state: present
   with_items: "{{passenger_yum_repo_gpg_urls}}"
   register: import_key
-  become: yes
+  become: true
   tags:
     - passenger
 
@@ -29,20 +29,15 @@
     gpgkey: "{{ passenger_yum_repo_gpg_urls[1] }}"
     gpgcheck: "{{ passenger_gpg_check }}"
     repo_gpgcheck: "{{ passenger_repo_gpgcheck }}"
-    sslverify: yes
+    sslverify: true
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-
-- name: Make cache
-  command: "yum -q makecache -y --disablerepo='*' --enablerepo='passenger'"
-  when: passenger_make_cache and import_key.changed
-  become: yes
 
 - name: Install the passenger repository
   yum:
-    name: mod_passenger
+    name: "{{ passenger_package_name }}"
     state: installed
-    update_cache: yes
-  become: yes
+    update_cache: true
+  become: true
   notify: restart apache
   tags:
     - passenger

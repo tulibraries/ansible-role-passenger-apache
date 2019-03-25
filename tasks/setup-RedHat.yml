@@ -15,7 +15,7 @@
   rpm_key:
     key: "{{ item }}"
     state: present
-  with_items: "{{passenger_yum_repo_gpg_urls}}"
+  with_items: "{{ passenger_yum_repo_gpg_urls }}"
   register: import_key
   become: true
   tags:

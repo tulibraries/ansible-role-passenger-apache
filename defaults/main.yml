@@ -7,5 +7,4 @@ passenger_repo_gpgcheck: true
 passenger_yum_repos_path: /etc/yum.repos.d/passenger.repo
 passenger_yum_repo_download_url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
 passenger_yum_repo_gpg_urls:
-  - https://oss-binaries.phusionpassenger.com/yum/definitions/RPM-GPG-KEY.asc
-  - https://packagecloud.io/phusion/passenger/gpgkey
+  - https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt

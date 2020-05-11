@@ -26,7 +26,7 @@
     name: passenger
     description: Repository with Passenger RPM packages for CentOS 7
     baseurl: https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch
-    gpgkey: "{{ passenger_yum_repo_gpg_urls[1] }}"
+    gpgkey: "{{ passenger_yum_repo_gpg_urls[0] }}"
     gpgcheck: "{{ passenger_gpg_check }}"
     repo_gpgcheck: "{{ passenger_repo_gpgcheck }}"
     sslverify: true

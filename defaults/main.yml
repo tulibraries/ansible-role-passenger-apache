@@ -1,10 +1,16 @@
 ---
 # defaults file for ansible_passenger-apache-role
 
+passenger_yum_repos_path: /etc/yum.repos.d/passenger
+passenger_yum_repo_template: passenger.j2
+
+# Repo template variables
+passenger_repo_name: passenger
+passenger_repo_baseurl: "https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch"
+passenger_repo_gpg_check: 0
+passenger_repo_repo_gpg_check: 1
+passenger_repo_gpg_url: https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt
+passenger_repo_sslverify: 1
+passenger_repo_sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
 passenger_package_name: mod_passenger
-passenger_gpg_check: false
-passenger_repo_gpgcheck: true
-passenger_yum_repos_path: /etc/yum.repos.d/passenger.repo
-passenger_yum_repo_download_url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
-passenger_yum_repo_gpg_urls:
-  - https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt

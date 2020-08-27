@@ -2,11 +2,8 @@
 
 - name: Make sure passenger prerequisites are installed
   yum:
-    name: "{{ item }}"
+    name: ["epel-release", "pygpgme"]
     state: installed
-  with_items:
-    - epel-release
-    - pygpgme
   become: true
   tags:
     - passenger

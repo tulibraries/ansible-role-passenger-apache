@@ -9,6 +9,7 @@ platforms:
   - name: instance
     image: centos:7
     command: /sbin/init
+    pre_build_image: true
     privileged: true
     capabilities:
       - SYS_ADMIN

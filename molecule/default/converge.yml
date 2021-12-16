@@ -6,5 +6,10 @@
       package:
         name: httpd
         state: present
+    - name: Update certificates
+      yum:
+        name: ca-certificates
+        update_cache: true
+        state: latest
   roles:
     - role: ansible-role-passenger-apache

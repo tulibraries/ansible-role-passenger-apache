@@ -4,6 +4,8 @@ galaxy_info:
   author: Chad Nelson
   description: This role installs Phusion Passenger for an environment already running Apache.
   company: Temple University Libraries
+  role_name: ansible_role_passenger_apache
+  namespace: tulibraries
   license: GPLv2
   min_ansible_version: 1.9
   platforms:

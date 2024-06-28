@@ -8,5 +8,5 @@
     - passenger
 
 # RedHat(setup) specific tasks
-- include: setup-RedHat.yml
+- include_tasks: setup-RedHat.yml
   when: "ansible_os_family == 'RedHat'"

@@ -1,8 +1,8 @@
 ---
 
 - name: Make sure passenger prerequisites are installed
-  yum:
-    name: ["epel-release", "pygpgme"]
+  dnf:
+    name: ["epel-release"]
     state: installed
   become: true
   tags:

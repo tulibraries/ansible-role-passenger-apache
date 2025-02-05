@@ -8,11 +8,60 @@
   tags:
     - passenger
 
-- name: Import the passenger gpg key
+- name: Download Phusion Passenger GPG Key
+  ansible.builtin.get_url:
+    url: "https://oss-binaries.phusionpassenger.com/phusion-software-signing-gpg-key.txt"
+    dest: "/tmp/phusion-key.asc"
+    mode: "0644"
+  tags:
+    - passenger
+
+- name: Temporarily Allow Weak Digest Algorithms (SHA1) for GPG
+  ansible.builtin.shell: |
+    echo "allow-weak-digest-algos SHA1" >> /etc/gnupg/gpg.conf
+  args:
+    executable: /bin/bash
+  tags:
+    - passenger
+
+- name: Import the GPG Key with SHA1 Allowed
   rpm_key:
     key: "{{ passenger_repo_gpg_url }}"
     state: present
   become: true
+  tags:
+    - passenger
+
+- name: Re-sign the GPG Key with Stronger Hash Algorithms (SHA256, SHA512)
+  ansible.builtin.shell: |
+    gpg --batch --yes --edit-key $(gpg --list-keys --with-colons | awk -F: '/^pub/ {print $5; exit}') trust
+    echo -e "trust\n5\ny\nsetpref SHA512 SHA384 SHA256 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed\nupdpref\nsave" | gpg --batch --edit-key $(gpg --list-keys --with-colons | awk -F: '/^pub/ {print $5; exit}')
+  args:
+    executable: /bin/bash
+  tags:
+    - passenger
+
+- name: Export the Re-signed GPG Key
+  ansible.builtin.shell: |
+    gpg --export --armor $(gpg --list-keys --with-colons | awk -F: '/^pub/ {print $5; exit}') > /tmp/phusion-key-updated.asc
+  args:
+    executable: /bin/bash
+  tags:
+    - passenger
+
+- name: Import the Re-signed GPG Key into the System Keyring
+  ansible.builtin.shell: |
+    rpm --import /tmp/phusion-key-updated.asc
+  args:
+    executable: /bin/bash
+  tags:
+    - passenger
+
+- name: Remove Weak Digest Allowance (for security)
+  ansible.builtin.shell: |
+    sed -i '/allow-weak-digest-algos SHA1/d' /etc/gnupg/gpg.conf
+  args:
+    executable: /bin/bash
   tags:
     - passenger
 

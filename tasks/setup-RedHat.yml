@@ -1,7 +1,7 @@
 ---
 
 - name: Make sure passenger prerequisites are installed
-  yum:
+  dnf:
     name: ["epel-release"]
     state: installed
   become: true

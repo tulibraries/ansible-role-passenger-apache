@@ -18,16 +18,41 @@
 
 - name: Temporarily Allow Weak Digest Algorithms (SHA1) for GPG
   ansible.builtin.shell: |
-    echo "allow-weak-digest-algos SHA1" >> /etc/gnupg/gpg.conf
+    echo "allow-weak-digest-algos" >> /etc/gnupg/gpg.conf
   args:
     executable: /bin/bash
   tags:
     - passenger
 
-- name: Import the GPG Key with SHA1 Allowed
-  rpm_key:
-    key: "{{ passenger_repo_gpg_url }}"
-    state: present
+- name: Import GPG key into the GPG keyring
+  command: "gpg --no-default-keyring --keyring /etc/pki/rpm-gpg/passenger-gpg-keyring.gpg --import /tmp/phusion-key.asc"
+  args:
+    creates: "/etc/pki/rpm-gpg/passenger-gpg-keyring.gpg"
+  become: true
+  tags:
+    - passenger
+
+- name: Export GPG key from keyring
+  command: >
+    gpg --no-default-keyring --keyring /etc/pki/rpm-gpg/passenger-gpg-keyring.gpg
+    --armor --export -o /etc/pki/rpm-gpg/passenger.asc
+  args:
+    creates: /etc/pki/rpm-gpg/passenger.asc
+  become: true
+  tags:
+    - passenger
+
+
+#- name: Add the GPG key to RPM
+  #rpm_key:
+    #key: "/etc/pki/rpm-gpg/passenger-gpg-keyring.gpg"
+    #state: present
+  #become: true
+  #tags:
+    #- passenger
+
+- name: Import GPG key manually
+  command: rpm --import /etc/pki/rpm-gpg/passenger.asc 
   become: true
   tags:
     - passenger

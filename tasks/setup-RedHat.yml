@@ -8,14 +8,6 @@
   tags:
     - passenger
 
-- name: Import the passenger gpg key
-  rpm_key:
-    key: "{{ passenger_repo_gpg_url }}"
-    state: present
-  become: true
-  tags:
-    - passenger
-
 - name: add passenger repository config
   template:
     src: "{{ passenger_yum_repo_template }}"

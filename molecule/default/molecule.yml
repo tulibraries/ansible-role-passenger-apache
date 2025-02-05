@@ -5,12 +5,13 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: rockylinux:8
+    image: "geerlingguy/docker-rockylinux9-ansible:latest"
     command: /lib/systemd/systemd
-    privileged: true
-    cgroupns_mode: host
     capabilities:
       - SYS_ADMIN
+    privileged: true
+    pre_build_image: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     tmpfs:
@@ -18,5 +19,7 @@ platforms:
       - /tmp
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: "/home/user/.ansible/roles"
 verifier:
   name: testinfra

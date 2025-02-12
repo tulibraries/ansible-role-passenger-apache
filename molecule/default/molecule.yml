@@ -19,7 +19,5 @@ platforms:
       - /tmp
 provisioner:
   name: ansible
-  env:
-    ANSIBLE_ROLES_PATH: "/home/user/.ansible/roles"
 verifier:
   name: testinfra

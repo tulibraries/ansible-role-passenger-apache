@@ -1,15 +1,5 @@
 ---
 - name: Converge
-  hosts: all
-  pre_tasks:
-    - name: install apache httpd
-      package:
-        name: httpd
-        state: present
-    - name: Update certificates
-      yum:
-        name: ca-certificates
-        update_cache: true
-        state: latest
+  hosts: all    
   roles:
     - role: ansible-role-passenger-apache

@@ -1,6 +1,18 @@
 ---
+- name: Install Apache HTTPD
+  package:
+    name: httpd
+    state: present
+  become: true
 
-- name: Make sure passenger prerequisites are installed
+- name: Update certificates
+  yum:
+    name: ca-certificates
+    update_cache: true
+    state: latest
+  become: true
+
+- name: Make sure Passenger prerequisites are installed
   dnf:
     name: ["epel-release"]
     state: installed
@@ -8,7 +20,7 @@
   tags:
     - passenger
 
-- name: add passenger repository config
+- name: Add Passenger repository config
   template:
     src: "{{ passenger_yum_repo_template }}"
     dest: "{{ passenger_yum_repos_path }}"
@@ -16,7 +28,7 @@
   tags:
     - passenger
 
-- name: Install the passenger repository
+- name: Install the Passenger repository
   yum:
     name: "{{ passenger_package_name }}"
     state: installed

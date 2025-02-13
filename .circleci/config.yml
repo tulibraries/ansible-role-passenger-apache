@@ -7,7 +7,6 @@ jobs:
       - image: cimg/python:3.12.3
         environment:
           PIPENV_VENV_IN_PROJECT: true
-          CI_ENV: "circleci"
     steps:
       - checkout
       - run: pipenv install --dev

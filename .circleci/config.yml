@@ -7,11 +7,12 @@ jobs:
       - image: cimg/python:3.12.3
         environment:
           PIPENV_VENV_IN_PROJECT: true
+          CI_ENV: "circleci"
     steps:
       - checkout
       - run: pipenv install --dev
       - setup_remote_docker
-      - run: sudo dnf makecache; sudo dnf install rsync
+      - run: sudo apt update; sudo apt install rsync
       - run:
           name: Molecule
           command: pipenv run molecule test

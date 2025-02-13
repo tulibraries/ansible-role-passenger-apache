@@ -29,11 +29,13 @@
     - passenger
 
 - name: Install the Passenger repository
-  yum:
+  dnf:
     name: "{{ passenger_package_name }}"
-    state: installed
+    state: present
+    enablerepo: passenger
     update_cache: true
   become: true
   notify: restart apache
   tags:
     - passenger
+

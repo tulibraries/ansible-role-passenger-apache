@@ -6,7 +6,7 @@ passenger_yum_repo_template: passenger.j2
 
 # Repo template variables
 passenger_repo_name: passenger
-passenger_repo_baseurl: "https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch"
+passenger_repo_baseurl: "https://oss-binaries.phusionpassenger.com/yum/passenger/el/9/x86_64/"
 passenger_repo_gpg_check: 0
 passenger_repo_repo_gpg_check: 1
 passenger_repo_gpg_url: https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt

@@ -37,3 +37,12 @@
   notify: restart apache
   tags:
     - passenger
+
+- name: Add Passenger config file
+  template:
+    src: passenger.j2
+    dest: /etc/httpd/conf.d/passenger.conf
+  become: true
+  tags:
+    - passenger
+

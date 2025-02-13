@@ -34,7 +34,7 @@
     state: installed
     update_cache: true
   become: true
-  when: ansible_env.CI_ENV | default('rocky') != "circleci"
+  when: lookup("env", "CI_ENV") | default("rocky") != "circleci"
   notify: restart apache
   tags:
     - passenger

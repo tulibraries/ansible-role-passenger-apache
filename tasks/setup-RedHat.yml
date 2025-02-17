@@ -1,19 +1,18 @@
----
 - name: Install Apache HTTPD
-  package:
+  ansible.builtin.package:
     name: httpd
     state: present
   become: true
 
 - name: Update certificates
-  yum:
+  ansible.builtin.yum:
     name: ca-certificates
     update_cache: true
     state: latest
   become: true
 
 - name: Make sure Passenger prerequisites are installed
-  dnf:
+  ansible.builtin.dnf:
     name: ["epel-release"]
     state: installed
   become: true
@@ -21,16 +20,18 @@
     - passenger
 
 - name: Add Passenger repository config
-  template:
+  ansible.builtin.template:
     src: "{{ passenger_yum_repo_template }}"
     dest: "{{ passenger_yum_repos_path }}"
   become: true
   tags:
     - passenger
 
-- name: Install the Passenger repository
-  dnf:
-    name: "{{ passenger_package_name }}"
+- name: Install Passenger and mod_passenger
+  ansible.builtin.dnf:
+    name:
+      - "{{ passenger_package_name }}"
+      - "mod_passenger"
     state: present
     enablerepo: passenger
     update_cache: true
@@ -39,3 +40,19 @@
   tags:
     - passenger
 
+- name: Ensure mpm_prefork is installed
+  ansible.builtin.dnf:
+    name: "httpd-devel"
+    state: present
+  become: true
+
+- name: Ensure Passenger module is configured
+  ansible.builtin.copy:
+    dest: /etc/httpd/conf.modules.d/00-passenger.conf
+    content: |
+      LoadModule passenger_module /usr/lib64/httpd/modules/mod_passenger.so
+      PassengerRoot /usr/share/passenger
+      PassengerDefaultRuby /usr/bin/ruby
+    mode: '0644'
+  become: true
+  notify: restart apache

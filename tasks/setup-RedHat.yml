@@ -47,12 +47,9 @@
   become: true
 
 - name: Ensure Passenger module is configured
-  ansible.builtin.copy:
+  ansible.builtin.template:
+    src: passenger.conf.j2
     dest: /etc/httpd/conf.modules.d/00-passenger.conf
-    content: |
-      LoadModule passenger_module /usr/lib64/httpd/modules/mod_passenger.so
-      PassengerRoot /usr/share/passenger
-      PassengerDefaultRuby /usr/bin/ruby
     mode: '0644'
   become: true
   notify: restart apache

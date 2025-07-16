@@ -32,12 +32,14 @@ jobs:
       - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
         
-      - run: pipenv install
-      
       - name: Install pipenv
         run: pip install pipenv
-    
-      
+
+      - name: Install dependencies
+        run: pipenv install --dev
+        env:
+          PIPENV_VENV_IN_PROJECT: true
+
       - name: Install rsync
         run: sudo apt update && sudo apt install -y rsync
       

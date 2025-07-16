@@ -35,6 +35,11 @@ jobs:
       - name: Install pipenv
         run: pip install pipenv
 
+      - name: Install dependencies
+        run: pipenv install --dev
+        env:
+          PIPENV_VENV_IN_PROJECT: true
+
       - name: Install rsync
         run: sudo apt update && sudo apt install -y rsync
       

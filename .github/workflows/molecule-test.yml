@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   molecule:
-    runs-on: [ self-hosted,systemd-runner ]
+    runs-on: [ self-hosted, systemd-runner ]
     timeout-minutes: 30
     strategy:
       matrix:

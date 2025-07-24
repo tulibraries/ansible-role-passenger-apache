@@ -19,9 +19,6 @@ platforms:
       - /tmp
 provisioner:
   name: ansible
-  connection_options:
-    ansible_user: root
-    ansible_connection: docker
   inventory:
     host_vars:
       instance:

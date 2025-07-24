@@ -35,7 +35,16 @@ jobs:
         run: pipenv install --dev
 
       - name: Install rsync
-        run: sudo apt update && sudo apt install -y rsync
-      
+        run: |
+          if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y rsync;
+          elif command -v dnf &> /dev/null; then
+            sudo dnf install -y rsync;
+          elif command -v yum &> /dev/null; then
+            sudo yum install -y rsync;
+          else
+            echo "No supported package manager found. Please install rsync manually." && exit 1;
+          fi
+
       - name: Run Molecule tests
         run: pipenv run molecule test

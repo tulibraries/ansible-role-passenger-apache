@@ -3,21 +3,16 @@ name: "Molecule Test"
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    types: [ opened, synchronize, reopened ]
-    branches: [ main ]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches-ignore:
+      - main
+  workflow_dispatch: {}
 
 permissions:
   contents: read # access to check out code and install dependencies
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  molecule:
+    runs-on: [ self-hosted,systemd-runner ]
     
     steps:
       - name: Checkout code
@@ -26,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12.3'
+          python-version: '3.12'
           cache: 'pipenv'
 
       - name: Install pipenv

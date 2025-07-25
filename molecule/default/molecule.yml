@@ -19,6 +19,5 @@ platforms:
       - /tmp
 provisioner:
   name: ansible
-
 verifier:
   name: testinfra

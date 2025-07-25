@@ -1,5 +1,5 @@
 ---
 - name: Converge
-  hosts: all    
+  hosts: all
   roles:
     - role: ansible-role-passenger-apache

@@ -11,18 +11,22 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Temporary variable until molecule-docker officially supports ansible 2.19+
+env:
+  ANSIBLE_ALLOW_BROKEN_CONDITIONALS: "True"
+
 jobs:
   molecule:
-    runs-on: [ self-hosted, systemd-runner ]
+    runs-on: [self-hosted, systemd-runner]
     timeout-minutes: 30
     strategy:
       matrix:
-        python-version: [ 3.12 ]
-    
+        python-version: [3.12]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: kishaningithub/setup-python-amazon-linux@v1
         with:
@@ -37,6 +41,9 @@ jobs:
 
       - name: Install rsync
         run: sudo dnf install -y rsync;
+
+      - name: Lint the role
+        run: pipenv run ansible-lint . --exclude=molecule/default/roles
 
       - name: Run Molecule tests
         run: pipenv run molecule test

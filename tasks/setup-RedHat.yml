@@ -5,7 +5,7 @@
   become: true
 
 - name: Update certificates
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: ca-certificates
     update_cache: true
     state: latest
@@ -36,7 +36,7 @@
     enablerepo: passenger
     update_cache: true
   become: true
-  notify: restart apache
+  notify: Restart apache
   tags:
     - passenger
 
@@ -52,4 +52,4 @@
     dest: /etc/httpd/conf.modules.d/00-passenger.conf
     mode: '0644'
   become: true
-  notify: restart apache
+  notify: Restart apache

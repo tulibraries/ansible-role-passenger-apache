@@ -8,6 +8,8 @@ pytest = "*"
 docker = "*"
 codecov = "*"
 testinfra = "*"
+molecule = "*"
+molecule-plugins = {extras = ["docker"], version = "*"}
 
 [packages]
 ansible = "==12.2.0"
@@ -16,8 +18,8 @@ ansible-core = "*"
 cryptography = "*"
 jinja2 = "*"
 molecule = "*"
-molecule-docker = "*"
 requests = "*"
+molecule-plugins = {extras = ["docker"], version = "*"}
 
 [requires]
 python_version = "3.12"

@@ -13,3 +13,5 @@ passenger_repo_gpg_url: https://oss-binaries.phusionpassenger.com/auto-software-
 passenger_repo_sslverify: 1
 passenger_repo_sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 passenger_package_name: mod_passenger
+passenger_manage_service: true
+passenger_become: true

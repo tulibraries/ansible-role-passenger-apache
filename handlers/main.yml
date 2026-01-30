@@ -5,4 +5,5 @@
   ansible.builtin.service:
     name: "{{ apache }}"
     state: restarted
-  become: true
+  become: "{{ passenger_become }}"
+  when: passenger_manage_service

@@ -3,3 +3,6 @@
   hosts: all
   roles:
     - role: ansible-role-passenger-apache
+  vars:
+    passenger_manage_service: false
+    passenger_become: false

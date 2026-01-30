@@ -1,21 +1,23 @@
-- name: Install Apache HTTPD
-  ansible.builtin.package:
-    name: httpd
+- name: Install base system deps
+  ansible.builtin.dnf:
+    name:
+      - glibc
+      - httpd
     state: present
-  become: true
+  when: passenger_manage_service
 
 - name: Update certificates
   ansible.builtin.dnf:
     name: ca-certificates
     update_cache: true
-    state: latest
-  become: true
+    state: present
+  when: passenger_manage_service
 
 - name: Make sure Passenger prerequisites are installed
   ansible.builtin.dnf:
     name: ["epel-release"]
     state: installed
-  become: true
+  become: "{{ passenger_become }}"
   tags:
     - passenger
 
@@ -23,7 +25,7 @@
   ansible.builtin.template:
     src: "{{ passenger_yum_repo_template }}"
     dest: "{{ passenger_yum_repos_path }}"
-  become: true
+  become: "{{ passenger_become }}"
   tags:
     - passenger
 
@@ -35,7 +37,8 @@
     state: present
     enablerepo: passenger
     update_cache: true
-  become: true
+  become: "{{ passenger_become }}"
+  when: passenger_manage_service
   notify: Restart apache
   tags:
     - passenger
@@ -44,12 +47,12 @@
   ansible.builtin.dnf:
     name: "httpd-devel"
     state: present
-  become: true
+  become: "{{ passenger_become }}"
 
 - name: Ensure Passenger module is configured
   ansible.builtin.template:
     src: passenger.conf.j2
     dest: /etc/httpd/conf.modules.d/00-passenger.conf
     mode: '0644'
-  become: true
+  become: "{{ passenger_become }}"
   notify: Restart apache

@@ -1,3 +1,6 @@
 LoadModule passenger_module /usr/lib64/httpd/modules/mod_passenger.so
 PassengerRoot /usr/share/passenger
 PassengerDefaultRuby /usr/bin/ruby
+{% if passenger_preload_bundler | bool %}
+PassengerPreloadBundler on
+{% endif %}
